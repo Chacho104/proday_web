@@ -19,6 +19,7 @@ export default {
         "button-text": "#F2F2F2",
         "badge-gray": "#333333",
         "text-gray": "#808080",
+        "task-card-bg": "#262626",
       },
     },
   },
