@@ -25,7 +25,7 @@ Additionally, you need to download and set up the backend system, as the applica
 NEXT_PUBLIC_TASK_API_URL=http://localhost:8080/tasks
 ```
 
-This configuration is required for the application to communicate with the backend API.
+This configuration is required for the application to communicate with the backend API, which is set to listen to port 8080 once you spin it up on your local machine.
 
 ### Installing Dependencies
 
