@@ -20,6 +20,7 @@ export default {
         "badge-gray": "#333333",
         "text-gray": "#808080",
         "task-card-bg": "#262626",
+        "modal-bg": "#e5e5e5",
       },
     },
   },
