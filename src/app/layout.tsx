@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/navbar";
 import { ToasterProvider } from "@/providers/toastProvider";
+import { ModalProvider } from "@/providers/modalProvider";
+import Modal from "./components/modals/modal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,8 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} antialiased bg-layout-bg`}>
         <ToasterProvider />
-        <Navbar />
-        {children}
+        <ModalProvider>
+          <Navbar />
+          {children}
+          <Modal />
+        </ModalProvider>
       </body>
     </html>
   );
