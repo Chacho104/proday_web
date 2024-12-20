@@ -53,7 +53,7 @@ If you would like to test with an optimized, production-ready build of the app, 
 npm run build
 npm start
 ```
-This will still spin up a local development server, but server an optimized, production-ready application. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the optimized application.
+This will still spin up a local development server, but serve an optimized, production-ready application. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the optimized application.
 
 ### Backend Requirement
 
