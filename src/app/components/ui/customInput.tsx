@@ -26,7 +26,7 @@ const CustomInput: React.FC<FieldHookConfig<string> & ICustomFieldProps> = ({
         {...props}
       />
       {meta.touched && meta.error ? (
-        <div className="mt-1 text-red-500">{meta.error}</div>
+        <div className="pt-2 text-red-500">{meta.error}</div>
       ) : null}
     </div>
   );
