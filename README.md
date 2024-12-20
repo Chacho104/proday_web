@@ -25,7 +25,7 @@ Additionally, you need to download and set up the backend system, as the applica
 NEXT_PUBLIC_TASK_API_URL=http://localhost:8080/tasks
 ```
 
-This configuration is required for the application to communicate with the backend API, which is set to listen to port 8080 once you spin it up on your local machine.
+This configuration is required for the application to communicate with the backend API.
 
 ### Installing Dependencies
 
@@ -46,6 +46,14 @@ npm run dev
 ```
 
 This will spin up a local development server. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+
+If you would like to test with an optimized, production-ready build of the app, run the following commands:
+
+```bash
+npm run build
+npm start
+```
+This will still spin up a local development server, but server an optimized, production-ready application. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the optimized application.
 
 ### Backend Requirement
 
@@ -76,6 +84,8 @@ To learn more about Next.js and the tools used in this project, check out the fo
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
 
 
 
