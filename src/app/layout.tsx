@@ -1,33 +1,39 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/navbar/navbar";
-import { ToasterProvider } from "@/providers/toastProvider";
-import { ModalProvider } from "@/providers/modalProvider";
+import { ToasterProvider } from "@/app/providers/toastProvider";
+import { ModalProvider } from "@/app/providers/modalProvider";
 import Modal from "./components/modals/modal";
 
-const inter = Inter({
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  variable: "--font-inter",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Nooro To Do App",
+  title: "ProDay",
   description:
-    "A To Do App built as a solution to Nooro's Full-stack Developer Take Home Assignment",
+    "A productivity web app that helps you achieve your goals, strictly one day at a time!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased bg-layout-bg`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+      <body className="bg-background font-mono">
         <ToasterProvider />
         <ModalProvider>
-          <Navbar />
           {children}
           <Modal />
         </ModalProvider>
