@@ -1,5 +1,5 @@
 "use client";
-import { useModal } from "@/providers/modalProvider";
+import { useModal } from "@/app/providers/modalProvider";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
