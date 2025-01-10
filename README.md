@@ -12,7 +12,7 @@ To run this project, ensure you have the following installed on your system:
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 - A code editor such as [Visual Studio Code](https://code.visualstudio.com/)
 
-Additionally, you need to download and set up the backend system, as the application relies on data provided by it.
+Additionally, you need to download and set up the backend system (proday_api), as the application relies on data provided by it.
 
 ### Downloading and Setting Up the Project
 
@@ -22,10 +22,10 @@ Additionally, you need to download and set up the backend system, as the applica
 4. Create a `.env` file in the root folder of the project and add the following line to configure the API endpoint:
 
 ```env
-NEXT_PUBLIC_TASK_API_URL=http://localhost:8080/tasks
+NEXT_PUBLIC_PRODAY_API_URL=http://localhost:8080/tasks
 ```
 
-This configuration is required for the application to communicate with the backend API.
+This configuration is required for the application to communicate with the Proday RESTful API.
 
 ### Installing Dependencies
 
@@ -55,16 +55,18 @@ npm start
 ```
 This will still spin up a local development server, but serve an optimized, production-ready application. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the optimized application.
 
+Note that you will need to authenticate (email and password for now) to access and use the app.
+
 ### Backend Requirement
 
-Before running the application, ensure the backend system is set up and running. The backend provides the data necessary for the app to function. Please refer to the backend repository for instructions on how to set it up and start it.
+Before running the application, ensure the backend system is set up and running. The backend provides the data and business logic necessary for the app to function. Please refer to the backend repository (proday_api) for instructions on how to set it up and start it.
 
 ## Key Dependencies
 
 This project uses several key dependencies to enhance functionality and streamline development:
 
 1. **Formik**: Simplifies form management and state handling.
-2. **Yup**: Provides schema validation for forms, ensuring robust data input handling.
+2. **Zod**: Provides schema validation for forms, ensuring robust data input handling and validation.
 3. **Tailwind CSS**: Enables rapid and responsive styling with a utility-first CSS framework.
 4. **React Context API**: Manages global state efficiently, allowing shared state across the application.
 
