@@ -8,3 +8,8 @@ body,
   height: 100%;
   scroll-behavior: smooth;
 }
+
+/* Fallback font in case set font is not loaded */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
