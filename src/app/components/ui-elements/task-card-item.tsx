@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Task } from "@/app/models/types";
 import { FaRegCircle, FaCheckCircle } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import axios from "axios";
@@ -9,6 +8,7 @@ import { MouseEventHandler } from "react";
 import Link from "next/link";
 import { title } from "process";
 import { useModal } from "@/app/providers/modalProvider";
+import { Task } from "@/app/lib/type-definitions";
 
 interface TaskCardItemProps {
   task: Task;
