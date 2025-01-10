@@ -8,9 +8,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#222c41",
+        "cards-background": "#2e384e",
+        "warm-yellow": "#fec04a",
         "nav-bg": "#0D0D0D",
         "layout-bg": "#1A1A1A",
         "dark-blue": "#1E6F9F",
