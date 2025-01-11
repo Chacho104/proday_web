@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToasterProvider } from "@/app/providers/toastProvider";
 import { ModalProvider } from "@/app/providers/modalProvider";
@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "A productivity web app that helps you achieve your goals, strictly one day at a time!",
 };
 
+// Layout for the whole application
 export default async function RootLayout({
   children,
 }: Readonly<{
