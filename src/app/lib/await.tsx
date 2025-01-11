@@ -1,3 +1,5 @@
+// A simple await utility function
+
 import { JSX } from "react";
 
 export default async function Await<T>({
