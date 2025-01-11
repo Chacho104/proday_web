@@ -1,14 +1,18 @@
-// Logic for user CRUD actions - Server Actions
+// File for defining the logic for signing up, loging in, and logging out users
+// These are server actions: ensures that the actions are not only executed server side,
+// but also that the functions are callable from client components
 
 "use server";
 
-import { FormState, SignupFormSchema } from "../lib/schema-definitions";
+import { FormState, AuthFormSchema } from "../lib/schema-definitions";
 import { redirect } from "next/navigation";
 import { createUserSession, deleteUserSession } from "../lib/session";
 
+// Server action for signing up
+// Called when user clicks Sign Up
 export async function signup(state: FormState, formData: FormData) {
   // Validate form fields
-  const validatedFields = SignupFormSchema.safeParse({
+  const validatedFields = AuthFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   });
@@ -50,9 +54,11 @@ export async function signup(state: FormState, formData: FormData) {
   }
 }
 
+// Server action for logging in
+// Called when user clicks Log In
 export async function login(state: FormState, formData: FormData) {
   // Validate form fields
-  const validatedFields = SignupFormSchema.safeParse({
+  const validatedFields = AuthFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   });
@@ -94,6 +100,8 @@ export async function login(state: FormState, formData: FormData) {
   }
 }
 
+// Server action for logging out
+// Called when user clicks Log Out
 export async function logout() {
   deleteUserSession();
   redirect("/login");
