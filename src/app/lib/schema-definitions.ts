@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-export const SignupFormSchema = z.object({
+// Schema for validating user inputs for signing up and loggin in
+// Confirms email and password are of the required format
+export const AuthFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }).trim(),
   password: z
     .string()
@@ -15,6 +17,7 @@ export const SignupFormSchema = z.object({
     .trim(),
 });
 
+// Type for the form state: useful for form submission action
 export type FormState =
   | {
       errors?: {
