@@ -16,7 +16,7 @@ const Signup = () => {
     <Container className="w-full h-full flex items-center justify-center">
       <form
         action={action}
-        className="w-full md:w-1/3 max-w-96 space-y-4 md:space-y-6 bg-cards-background shadow-xl p-6 rounded-md"
+        className="w-full max-w-96 space-y-4 md:space-y-6 bg-cards-background shadow-xl p-6 rounded-md"
       >
         <AuthHeadline message="Sign up to handle your daily tasks like a pro." />
         <div className="flex flex-col gap-y-2">
@@ -67,7 +67,7 @@ const Signup = () => {
           <p>Already have an account?</p>
           <Link
             href={"/login"}
-            className="hover:text-btn-background hover:underline hover:underline-offset-2 transition"
+            className="hover:text-warm-yellow hover:underline hover:underline-offset-2 transition"
           >
             Log in here
           </Link>
