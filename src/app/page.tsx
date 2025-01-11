@@ -5,8 +5,10 @@ import { getUser } from "./lib/dal";
 import SideBar from "./components/side-bar/side-bar";
 import Container from "./components/ui-elements/layout/container";
 import Dashboard from "./components/dashboard/dashboard";
+import { redirect } from "next/navigation";
 
 const LandingPage = async () => {
+  // Call getUser function to confirm auth status
   const user = await getUser();
   return (
     <main className="h-full w-full">
