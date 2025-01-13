@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ProDay",
+  title: "Proday",
   description:
     "A productivity web app that helps you achieve your goals, strictly one day at a time!",
 };
