@@ -21,10 +21,10 @@ export const AuthFormSchema = z.object({
 export type FormState =
   | {
       errors?: {
-        name?: string[];
         email?: string[];
         password?: string[];
       };
+      authErrors?: string;
       message?: string;
     }
   | undefined;
