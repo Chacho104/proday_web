@@ -32,6 +32,8 @@ export const getUser = cache(async () => {
 
   const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/user`;
 
+  let redirectPath: string | null = null;
+
   try {
     // Send GET request
     const response = await fetch(url, {
@@ -41,9 +43,48 @@ export const getUser = cache(async () => {
         Authorization: `Bearer ${authToken}`,
       },
     });
+
+    if (!response.ok) {
+      redirectPath = "/login";
+      return null;
+    }
     const user = await response.json();
 
-    return user;
+    return user.user;
+  } catch (error: any) {
+    console.error("Error:", error);
+    return null;
+  } finally {
+    if (redirectPath) redirect(redirectPath);
+  }
+});
+
+// Get tasks for the user
+export const getUserTasks = cache(async () => {
+  const authToken = await verifyUserSession();
+
+  if (!authToken) return null;
+
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks`;
+
+  try {
+    // Send GET request to get tasks
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.log(`Error: ${errorData}`);
+      return null;
+    }
+    const tasks = await response.json();
+
+    return tasks;
   } catch (error: any) {
     console.error("Error:", error);
     return null;
