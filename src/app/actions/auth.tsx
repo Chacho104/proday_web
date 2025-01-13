@@ -39,12 +39,18 @@ export async function signup(state: FormState, formData: FormData) {
       body: JSON.stringify({ email, password }),
     });
 
+    // Return from function if response is not okay and show error message to client
+    if (!response.ok) {
+      const errorMessage = await response.json();
+      return { authError: `${errorMessage.message}` };
+    }
+
     // Parse and handle success response: from the signup endpoint, we get a userId and a server generated token
-    const { token } = await response.json();
+    const { userId, token } = await response.json();
 
     // Create a user session that utilizes the token sent back from the server
     await createUserSession(token);
-    redirectPath = "/";
+    redirectPath = `/${userId}/tasks`;
   } catch (error: any) {
     // Handle errors
     console.error("Error:", error);
@@ -85,12 +91,18 @@ export async function login(state: FormState, formData: FormData) {
       body: JSON.stringify({ email, password }),
     });
 
+    // Return from function if response is not okay and show error message to client
+    if (!response.ok) {
+      const errorMessage = await response.json();
+      return { authError: `${errorMessage.message}` };
+    }
+
     // Parse and handle success response
-    const { token } = await response.json();
+    const { userId, token } = await response.json();
 
     await createUserSession(token);
 
-    redirectPath = "/";
+    redirectPath = `/${userId}/tasks`;
   } catch (error: any) {
     // Handle errors
     console.error("Error:", error);
