@@ -31,7 +31,7 @@ const Login = () => {
             className="p-2 rounded-md focus:outline-none"
           />
         </div>
-        {state?.errors.email && (
+        {state?.errors?.email && (
           <p className="text-red-500 text-xs">{state.errors.email}</p>
         )}
         <div className="flex flex-col gap-y-2">
@@ -63,6 +63,9 @@ const Login = () => {
         >
           {pending ? "Logging In..." : "Log In"}
         </button>
+        {state?.authError && (
+          <p className="text-red-500 text-sm">{state.authError}</p>
+        )}
         <div className="flex items-center gap-x-1 text-sm text-white">
           <p>Don't have an account?</p>
           <Link
