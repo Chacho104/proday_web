@@ -5,9 +5,10 @@
 "use client";
 
 import Link from "next/link";
+import { useActionState } from "react";
+
 import Container from "../components/ui-elements/layout/container";
 import AuthHeadline from "../components/ui-elements/general/auth-headline";
-import { useActionState } from "react";
 import { signup } from "../actions/auth";
 
 const Signup = () => {
@@ -28,7 +29,7 @@ const Signup = () => {
             name="email"
             id="email"
             placeholder="Email"
-            className="p-2 rounded-md focus:outline-none"
+            className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
         {state?.errors?.email && (
@@ -43,7 +44,7 @@ const Signup = () => {
             name="password"
             id="password"
             placeholder="Password"
-            className="p-2 rounded-md focus:outline-none"
+            className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
         {state?.errors?.password && (
