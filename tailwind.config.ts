@@ -19,7 +19,7 @@ export default {
         "border-color": "#3b455c",
         "main-text": "#a7adb4",
         "sub-text": "#808080",
-        "complete-task": "#00ff00",
+        "complete-task": "#2e384e",
         "pending-task": "#a7abea",
         "task-badge-one": "#00a300",
         "task-badge-two": "#dc143c",
