@@ -54,7 +54,8 @@ export async function createUserSession(authToken: string) {
 }
 
 // Util function to delete user session
-// Basically, to be called when user logs oout
+// Basically, to be called when user logs out
+// Caveat: can only be called from server components
 export async function deleteUserSession() {
   const cookieStore = await cookies();
   cookieStore.delete("userSession");
