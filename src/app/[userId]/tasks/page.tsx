@@ -5,9 +5,9 @@ import { TbClipboardSmile, TbClipboardText } from "react-icons/tb";
 import { TaskData } from "@/app/lib/type-definitions";
 import { getUserTasks } from "@/app/lib/dal";
 
-import NoTasksUI from "./components/no-tasks-ui";
-import TaskList from "./components/task-list";
-import TasksSummary from "./components/tasks-summary";
+import NoTasksUI from "./components/tasks/no-tasks-ui";
+import TaskList from "./components/tasks/task-list";
+import TasksSummary from "./components/tasks/tasks-summary";
 
 const HomePage = async ({
   params,
@@ -20,7 +20,7 @@ const HomePage = async ({
   return (
     <div>
       {tasks.tasks.length === 0 ? (
-        <NoTasksUI />
+        <NoTasksUI userId={userId} />
       ) : (
         <>
           <div className="flex items-center justify-between gap-x-4 mb-6 w-full">
