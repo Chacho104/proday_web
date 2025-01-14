@@ -68,7 +68,7 @@ const TaskItem = ({ task, userId }: TaskItemProps) => {
   return (
     <li>
       <Link
-        className={`w-full rounded-md bg-task-card-bg p-4 flex items-center justify-start cursor-pointer gap-x-4 hover:shadow-2xl transition ${
+        className={`w-full rounded-md bg-text-field-bg p-4 flex items-center justify-start cursor-pointer gap-x-4 hover:shadow-2xl transition ${
           task.completed ? "hover:cursor-not-allowed" : ""
         }`}
         href={task.completed ? "/" : `/${userId}/tasks/${task.id}`}
@@ -76,7 +76,7 @@ const TaskItem = ({ task, userId }: TaskItemProps) => {
         {!task.completed && (
           <FaRegCircle
             size={18}
-            className="text-warm-yellow cursor-pointer hover:scale-110 min-w-6"
+            className="text-black cursor-pointer hover:scale-110 min-w-6"
             onClick={() => {}}
           />
         )}
@@ -90,7 +90,7 @@ const TaskItem = ({ task, userId }: TaskItemProps) => {
         <div className="flex items-center justify-start gap-x-4 flex-wrap gap-y-2">
           <p
             className={`font-normal text-sm ${
-              task.completed ? "line-through text-text-gray" : "text-white"
+              task.completed ? "line-through text-text-gray" : "text-black"
             }`}
           >
             {task.title}
