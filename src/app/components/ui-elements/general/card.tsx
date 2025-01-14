@@ -11,7 +11,9 @@ interface CardProps {
 }
 const Card = ({ children, className }: CardProps) => {
   return (
-    <div className={cn("bg-cards-background rounded-md shadow-md", className)}>
+    <div
+      className={cn("bg-cards-background rounded-md shadow-md p-6", className)}
+    >
       {children}
     </div>
   );
