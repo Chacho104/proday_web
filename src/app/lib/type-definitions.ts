@@ -9,6 +9,25 @@ export interface Task {
   completed: boolean;
   createdAt: string;
   updatedAt: string;
+  subTasks: SubTask[];
+  taskItems: TaskItem[];
+}
+
+export interface SubTask {
+  id: string;
+  title: string;
+  completed: boolean;
+  createdAt: string;
+  updatedAt: string;
+  taskItems: TaskItem[];
+}
+
+export interface TaskItem {
+  id: string;
+  title: string;
+  completed: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface TaskData {
