@@ -26,6 +26,7 @@ export default {
         "task-badge_three": "#008ba7",
         "task-badge-four": "#F065FF",
         "delete-btn": "#ff0000",
+        "text-field-bg": "#e5e5e5",
         "nav-bg": "#0D0D0D",
         "layout-bg": "#1A1A1A",
         "dark-blue": "#1E6F9F",
