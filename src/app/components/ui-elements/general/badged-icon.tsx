@@ -8,7 +8,7 @@ interface BadgedIconProps {
   count: number;
 }
 
-const BadgedIcon: React.FC<BadgedIconProps> = ({ icon: Icon, count }) => {
+const BadgedIcon = ({ icon: Icon, count }: BadgedIconProps) => {
   return (
     <div className="flex items-center cursor-pointer hover:scale-110">
       <Icon size={34} className="text-white" />
