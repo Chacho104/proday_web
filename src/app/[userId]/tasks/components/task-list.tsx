@@ -1,4 +1,7 @@
 "use client";
+
+import { useRouter } from "next/navigation";
+
 import { Task } from "@/app/lib/type-definitions";
 import TaskCardItem from "./task-item";
 import Card from "../../../components/ui-elements/general/card";
@@ -9,11 +12,15 @@ interface TaskListProps {
   userId: string;
 }
 const TaskList = ({ tasks, userId }: TaskListProps) => {
+  const router = useRouter();
   return (
-    <Card className="p-4 mt-6">
+    <Card>
       <div className="flex w-full items-center justify-between">
         <h2 className="text-white text-lg py-2">Today&#39;s Tasks</h2>
-        <CreateTaskButton label="Task" />
+        <CreateTaskButton
+          label="Task"
+          onClick={() => router.push(`/${userId}/tasks/new`)}
+        />
       </div>
       <div className="pb-4 pt-2 sm:pt-0">
         <p className="text-sm text-warm-yellow">
