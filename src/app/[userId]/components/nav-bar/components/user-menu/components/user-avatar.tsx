@@ -5,10 +5,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import UserMenuItem from "./user-menu-item";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
+import MenuItem from "@/app/components/ui-elements/general/menu-item";
 
 const UserAvatar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -43,15 +43,15 @@ const UserAvatar = () => {
             onClick={toggleUserMenuItems}
             className="flex cursor-pointer flex-col py-1"
           >
-            <UserMenuItem label="Username" icon={FaRegUser} />
+            <MenuItem label="Username" icon={FaRegUser} />
             {/* Callback function to navigate to user settings page */}
-            <UserMenuItem
+            <MenuItem
               onClick={() => {}}
               label="Settings"
               icon={IoSettingsOutline}
             />
             {/* Callback function to logout user */}
-            <UserMenuItem
+            <MenuItem
               onClick={() => {}}
               label="Log Out"
               icon={MdOutlineLogout}
