@@ -11,7 +11,7 @@ interface TasksSummaryProps {
 
 const TasksSummary = ({ icon: Icon, label, count }: TasksSummaryProps) => {
   return (
-    <Card className="flex items-start justify-start p-4 gap-x-4 w-full">
+    <Card className="flex items-start justify-start gap-x-4 w-full">
       <Icon
         size={30}
         className="text-warm-yellow border h-10 sm:h-14 w-10 sm:w-14 p-2 border-border-color rounded-md"
