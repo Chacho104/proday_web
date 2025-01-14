@@ -3,6 +3,7 @@
 // Has a redirect to signup page for new unauthenticated users
 
 "use client";
+
 import { useActionState } from "react";
 import Link from "next/link";
 
@@ -28,7 +29,7 @@ const Login = () => {
             name="email"
             id="email"
             placeholder="Email"
-            className="p-2 rounded-md focus:outline-none"
+            className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
         {state?.errors?.email && (
@@ -43,7 +44,7 @@ const Login = () => {
             name="password"
             id="password"
             placeholder="Password"
-            className="p-2 rounded-md focus:outline-none"
+            className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
         {state?.errors?.password && (
