@@ -90,3 +90,35 @@ export const getUserTasks = cache(async () => {
     return null;
   }
 });
+
+// Get task details for a specific task
+export const getTaskDetails = cache(async (taskId: string) => {
+  const authToken = await verifyUserSession();
+
+  if (!authToken) return null;
+
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}`;
+
+  try {
+    // Send GET request to get tasks
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.log(`Error: ${errorData}`);
+      return null;
+    }
+    const task = await response.json();
+
+    return task.data;
+  } catch (error: any) {
+    console.error("Error:", error);
+    return null;
+  }
+});
