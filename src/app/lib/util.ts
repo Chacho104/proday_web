@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function listRemainingHours() {
   const now = new Date(); // Get the current date and time
-  const currentHour = now.getHours() + 1; // Get the current hour (24-hour format) and add one so that it shows next hour
+  const currentHour = now.getHours(); // Get the current hour (24-hour format) and add one so that it shows next hour
   const hours = [];
 
   // Iterate through the remaining hours of the day
