@@ -9,15 +9,23 @@ import { HiOutlineTrash } from "react-icons/hi2";
 import { TaskItem as TaskItemType } from "@/app/lib/type-definitions";
 
 interface TaskItemProps {
+  taskId: string;
   taskItem: TaskItemType;
   userId: string;
 }
 
-const TaskItem = ({ taskItem, userId }: TaskItemProps) => {
+const TaskItem = ({ taskId, taskItem, userId }: TaskItemProps) => {
+  let path;
+
+  if (taskItem.parentType === "TASK") {
+    path = `/${userId}/tasks/${taskItem.taskId}/task-items/${taskItem.id}`;
+  } else {
+    path = `/${userId}/tasks/${taskId}/sub-tasks/${taskItem.subTaskId}/task-items/${taskItem.id}`;
+  }
   return (
     <li className="relative">
       <Link
-        href={"/"}
+        href={path}
         className={`w-full rounded-md bg-text-field-bg p-2 flex items-center justify-start cursor-pointer gap-x-2 hover:shadow-2xl transition ${
           taskItem.completed ? "hover:cursor-not-allowed" : ""
         }`}
