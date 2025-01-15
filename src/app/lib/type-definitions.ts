@@ -15,6 +15,7 @@ export interface Task {
 
 export interface SubTask {
   id: string;
+  taskId: string;
   title: string;
   completed: boolean;
   createdAt: string;
@@ -24,6 +25,9 @@ export interface SubTask {
 
 export interface TaskItem {
   id: string;
+  taskId?: string;
+  subTaskId?: string;
+  parentType: "TASK" | "SUB_TASK";
   title: string;
   completed: boolean;
   createdAt: string;
