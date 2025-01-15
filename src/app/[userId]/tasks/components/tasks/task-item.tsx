@@ -161,13 +161,17 @@ const TaskItem = ({ task, userId }: TaskItemProps) => {
             className="flex cursor-pointer flex-col py-1"
           >
             <MenuItem
-              onClick={() => {}} // Push to page to add a sub-task to the task
+              onClick={() =>
+                router.push(`/${userId}/tasks/${task.id}/sub-tasks/new`)
+              } // Push to page to add a sub-task to the task
               label="Add sub-task"
               icon={BsClipboardPlus}
             />
             <MenuItem
-              onClick={() => {}} // Push to page to add a checklist item to this task
-              label="Add checklist"
+              onClick={() =>
+                router.push(`/${userId}/tasks/${task.id}/task-items/new`)
+              } // Push to page to add a checklist item to this task
+              label="Add checklist items"
               icon={FaListCheck}
             />
             <MenuItem
@@ -183,6 +187,7 @@ const TaskItem = ({ task, userId }: TaskItemProps) => {
           subTasks={task.subTasks}
           taskItems={task.taskItems}
           userId={userId}
+          taskId={task.id}
         />
       )}
     </li>
