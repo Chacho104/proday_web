@@ -4,13 +4,14 @@
 
 "use server";
 
-import { FormState, AuthFormSchema } from "../lib/schema-definitions";
 import { redirect } from "next/navigation";
+
+import { AuthFormState, AuthFormSchema } from "../lib/schema-definitions";
 import { createUserSession, deleteUserSession } from "../lib/session";
 
 // Server action for signing up
 // Called when user clicks Sign Up
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(state: AuthFormState, formData: FormData) {
   // Validate form fields
   const validatedFields = AuthFormSchema.safeParse({
     email: formData.get("email"),
@@ -62,7 +63,7 @@ export async function signup(state: FormState, formData: FormData) {
 
 // Server action for logging in
 // Called when user clicks Log In
-export async function login(state: FormState, formData: FormData) {
+export async function login(state: AuthFormState, formData: FormData) {
   // Validate form fields
   const validatedFields = AuthFormSchema.safeParse({
     email: formData.get("email"),
