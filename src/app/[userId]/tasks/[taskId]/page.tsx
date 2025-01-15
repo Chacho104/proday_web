@@ -7,12 +7,15 @@ const SingleTaskPage = async ({
   params: Promise<{ taskId: string }>;
 }) => {
   const { taskId } = await params;
-  const task = await getTaskDetails(taskId);
-  return (
-    <div>
-      <TaskForm initialData={task} />
-    </div>
-  );
+
+  let initialData;
+
+  // Only send a request for initial data if the taskId is an actual id
+  if (taskId !== "new") {
+    initialData = await getTaskDetails(taskId);
+  }
+
+  return <TaskForm initialData={initialData} />;
 };
 
 export default SingleTaskPage;
