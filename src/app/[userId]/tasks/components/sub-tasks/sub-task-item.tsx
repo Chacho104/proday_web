@@ -18,6 +18,7 @@ import { HiOutlineTrash } from "react-icons/hi2";
 import { SubTask } from "@/app/lib/type-definitions";
 import MenuItem from "@/app/components/ui-elements/general/menu-item";
 import TaskItemList from "../task-items/task-item-list";
+import { useRouter } from "next/navigation";
 
 interface SubTaskItemProps {
   subTask: SubTask;
@@ -25,6 +26,7 @@ interface SubTaskItemProps {
 }
 
 const SubTaskItem = ({ subTask, userId }: SubTaskItemProps) => {
+  const router = useRouter();
   const [openSubTaskMenu, setOpenSubTaskMenu] = useState<boolean>(false);
   const [openSubTaskItems, setOpenSubTaskItems] = useState<boolean>(false);
 
@@ -42,7 +44,7 @@ const SubTaskItem = ({ subTask, userId }: SubTaskItemProps) => {
   return (
     <li className="relative">
       <Link
-        href={"/"}
+        href={`/${userId}/tasks/${subTask.taskId}/sub-tasks/${subTask.id}`}
         className={`w-full rounded-md bg-text-field-bg p-3 flex items-center justify-start cursor-pointer gap-x-2 hover:shadow-2xl transition ${
           subTask.completed ? "hover:cursor-not-allowed" : ""
         }`}
@@ -91,8 +93,12 @@ const SubTaskItem = ({ subTask, userId }: SubTaskItemProps) => {
             className="flex cursor-pointer flex-col py-1"
           >
             <MenuItem
-              onClick={() => {}} // Push to page to add a checklist item to this task
-              label="Add checklist"
+              onClick={() =>
+                router.push(
+                  `/${userId}/tasks/${subTask.taskId}/sub-tasks/${subTask.id}/task-items/new`
+                )
+              } // Push to page to add a checklist item to this task
+              label="Add checklist items"
               icon={FaListCheck}
             />
             <MenuItem
@@ -104,7 +110,11 @@ const SubTaskItem = ({ subTask, userId }: SubTaskItemProps) => {
         </div>
       )}
       {openSubTaskItems && (
-        <TaskItemList taskItems={subTask.taskItems} userId={userId} />
+        <TaskItemList
+          taskItems={subTask.taskItems}
+          userId={userId}
+          taskId={subTask.taskId}
+        />
       )}
     </li>
   );
