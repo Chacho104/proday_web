@@ -1,5 +1,7 @@
 // Form component for creating new tasks or updating new tasks
 
+"use client";
+
 import Card from "@/app/components/ui-elements/general/card";
 import { Task } from "@/app/lib/type-definitions";
 import { listRemainingHours } from "@/app/lib/util";
@@ -31,7 +33,7 @@ const remainingHours = listRemainingHours();
 
 const TaskForm = ({ initialData }: TaskFormProps) => {
   return (
-    <Card className="">
+    <Card>
       {initialData ? (
         <h2 className="text-white text-lg py-2">
           Update the selected task below
@@ -39,7 +41,7 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
       ) : (
         <h2 className="text-white text-lg py-2">Create a task below</h2>
       )}
-      <form className="w-full space-y-4 md:space-y-6">
+      <form action="" className="w-full space-y-4 md:space-y-6">
         <div className="w-full flex flex-col gap-y-2">
           <label htmlFor="title" className="text-warm-yellow">
             Title
@@ -49,8 +51,8 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             name="title"
             id="title"
             placeholder="Task Title"
-            defaultValue={initialData ? initialData.title : undefined}
             required
+            defaultValue={initialData ? initialData.title : undefined}
             className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
@@ -62,8 +64,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             <select
               name="type"
               id="type"
-              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
               required
+              defaultValue={initialData ? initialData.type : undefined}
+              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
             >
               {TASK_TYPES.map((type) => (
                 <option key={type.value} value={type.value}>
@@ -79,8 +82,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             <select
               name="urgency"
               id="urgency"
-              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
               required
+              defaultValue={initialData ? initialData.urgency : undefined}
+              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
             >
               {URGENCY_TYPES.map((type) => (
                 <option key={type.value} value={type.value}>
@@ -96,8 +100,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             <select
               name="importance"
               id="importance"
-              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
               required
+              defaultValue={initialData ? initialData.importance : undefined}
+              className="p-2 rounded-md focus:outline-none bg-text-field-bg"
             >
               {IMPORTANCE_TYPES.map((type) => (
                 <option key={type.value} value={type.value}>
@@ -107,12 +112,13 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             </select>
           </div>
           <div className="w-full flex flex-col gap-y-2">
-            <label htmlFor="deadline" className="text-warm-yellow">
+            <label htmlFor="dueDate" className="text-warm-yellow">
               Deadline (optional)
             </label>
             <select
-              name="deadline"
-              id="deadline"
+              name="dueDate"
+              id="dueDate"
+              defaultValue={initialData ? initialData.dueDate : undefined}
               className="p-2 rounded-md focus:outline-none bg-text-field-bg"
             >
               {remainingHours.map((hour) => (
@@ -127,7 +133,7 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
           type="submit"
           className="border-1 bg-warm-yellow py-2 px-4 rounded-md"
         >
-          {initialData ? "Update Task" : "Create Task"}
+          {initialData ? "Update" : "Create"}
         </button>
       </form>
     </Card>
