@@ -122,3 +122,71 @@ export const getTaskDetails = cache(async (taskId: string) => {
     return null;
   }
 });
+
+// Get sub-task details for a specific sub-task
+export const getSubTaskDetails = cache(
+  async (taskId: string, subTaskId: string) => {
+    const authToken = await verifyUserSession();
+
+    if (!authToken) return null;
+
+    const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}/sub-tasks/${subTaskId}`;
+
+    try {
+      // Send GET request to get tasks
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(`Error: ${errorData}`);
+        return null;
+      }
+      const subTask = await response.json();
+
+      return subTask.data;
+    } catch (error: any) {
+      console.error("Error:", error);
+      return null;
+    }
+  }
+);
+
+// Get sub-task details for a specific sub-task
+export const getTaskItemDetails = cache(
+  async (parentId: string, checklistId: string) => {
+    const authToken = await verifyUserSession();
+
+    if (!authToken) return null;
+
+    const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${parentId}/items/${checklistId}`;
+
+    try {
+      // Send GET request to get tasks
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(`Error: ${errorData}`);
+        return null;
+      }
+      const checklistItem = await response.json();
+
+      return checklistItem.data;
+    } catch (error: any) {
+      console.error("Error:", error);
+      return null;
+    }
+  }
+);
