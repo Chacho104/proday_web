@@ -32,7 +32,7 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="bg-background font-mono">
+      <body className="bg-background font-sans">
         <ToasterProvider />
         <ModalProvider>
           {children}
