@@ -15,7 +15,7 @@ interface NoTasksUIProps {
 const NoTasksUI = ({ userId }: NoTasksUIProps) => {
   const router = useRouter();
   return (
-    <Card className="flex flex-col justify-center items-center w-full rounded-md gap-y-4 py-16">
+    <Card className="flex flex-col justify-center items-center w-full rounded-md gap-y-4 md:gap-y-8 py-16 font-mono">
       <Image
         alt="Tasks Image"
         width={56}
