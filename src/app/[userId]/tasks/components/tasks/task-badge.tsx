@@ -10,7 +10,9 @@ interface TaskBadgeProps {
 
 const TaskBadge = ({ label, className }: TaskBadgeProps) => {
   return (
-    <div className={cn("text-[10px] text-white py-1 px-2 rounded-full", className)}>
+    <div
+      className={cn("text-[10px] text-black py-1 px-3 rounded-md", className)}
+    >
       <span>{label}</span>
     </div>
   );
