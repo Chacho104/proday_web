@@ -3,15 +3,17 @@
 // Use task id to either get initial data (a subTask whose parent id is same as task id) or
 // Create a new subTask with the task id as parent id
 
-import { getSubTaskDetails } from "@/app/lib/dal";
+import { getSubTaskDetails, verifyUserSession } from "@/app/lib/dal";
 import SubTaskForm from "./components/sub-task-form";
 
 const SingleSubTaskPage = async ({
   params,
 }: {
-  params: Promise<{ taskId: string; subTaskId: string }>;
+  params: Promise<{ userId: string; taskId: string; subTaskId: string }>;
 }) => {
-  const { taskId, subTaskId } = await params;
+  const authToken = await verifyUserSession();
+
+  const { userId, taskId, subTaskId } = await params;
 
   let initialData;
 
@@ -20,7 +22,14 @@ const SingleSubTaskPage = async ({
     initialData = await getSubTaskDetails(taskId, subTaskId);
   }
 
-  return <SubTaskForm taskId={taskId} initialData={initialData} />;
+  return (
+    <SubTaskForm
+      userId={userId}
+      taskId={taskId}
+      initialData={initialData}
+      token={authToken}
+    />
+  );
 };
 
 export default SingleSubTaskPage;
