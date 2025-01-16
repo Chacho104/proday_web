@@ -3,13 +3,13 @@
 import { TbClipboardSmile, TbClipboardText } from "react-icons/tb";
 
 import { TaskData } from "@/app/lib/type-definitions";
-import { getUserTasks } from "@/app/lib/dal";
+import { getUserTasks, verifyUserSession } from "@/app/lib/dal";
 
 import NoTasksUI from "./components/tasks/no-tasks-ui";
 import TaskList from "./components/tasks/task-list";
 import TasksSummary from "./components/tasks/tasks-summary";
 
-const HomePage = async ({
+const UserTasksPage = async ({
   params,
 }: {
   params: Promise<{ userId: string }>;
@@ -17,6 +17,7 @@ const HomePage = async ({
   const tasks: TaskData = await getUserTasks();
   const pendingTasks = tasks.total - tasks.completed;
   const { userId } = await params;
+  const authToken = await verifyUserSession();
   return (
     <div>
       {tasks.tasks.length === 0 ? (
@@ -35,11 +36,11 @@ const HomePage = async ({
               count={pendingTasks}
             />
           </div>
-          <TaskList tasks={tasks.tasks} userId={userId} />
+          <TaskList tasks={tasks.tasks} userId={userId} token={authToken} />
         </>
       )}
     </div>
   );
 };
 
-export default HomePage;
+export default UserTasksPage;
