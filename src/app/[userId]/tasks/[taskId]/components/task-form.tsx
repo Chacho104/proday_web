@@ -1,13 +1,17 @@
-// Form component for creating new tasks or updating new tasks
+// Form component for creating new tasks or updating new tasks when initial data is not null
 
 "use client";
 
+import { taskFormAction } from "@/app/actions/tasks";
 import Card from "@/app/components/ui-elements/general/card";
 import { Task } from "@/app/lib/type-definitions";
 import { listRemainingHours } from "@/app/lib/util";
+import { useActionState } from "react";
 
 interface TaskFormProps {
+  userId: string;
   initialData: Task | null;
+  token: any;
 }
 
 const TASK_TYPES = [
@@ -31,17 +35,43 @@ const IMPORTANCE_TYPES = [
 
 const remainingHours = listRemainingHours();
 
-const TaskForm = ({ initialData }: TaskFormProps) => {
+const TaskForm = ({ userId, initialData, token }: TaskFormProps) => {
+  let httpMethod: string;
+  let taskId: string | null;
+
+  if (initialData) {
+    httpMethod = "PATCH";
+    taskId = initialData.id;
+  } else {
+    httpMethod = "POST";
+    taskId = null;
+  }
+
+  // Supply form data with extra arguments through bind method
+  // To access the arguments in the function signature make sure the props are listed in the same order as below
+  // formData prop will come last, after token
+  const extendedTaskFormAction = taskFormAction.bind(
+    null,
+    httpMethod,
+    taskId,
+    userId,
+    token
+  );
+
+  const [state, action, pending] = useActionState(
+    extendedTaskFormAction,
+    undefined
+  );
   return (
     <Card>
-      {initialData ? (
-        <h2 className="text-white text-lg py-2">
-          Update the selected task below
-        </h2>
-      ) : (
-        <h2 className="text-white text-lg py-2">Create a task below</h2>
-      )}
-      <form action="" className="w-full space-y-4 md:space-y-6">
+      <div className="w-full text-white text-lg py-2">
+        {initialData ? (
+          <h2>Update the selected task below</h2>
+        ) : (
+          <h2>Create a task below</h2>
+        )}
+      </div>
+      <form action={action} className="w-full space-y-4 md:space-y-6">
         <div className="w-full flex flex-col gap-y-2">
           <label htmlFor="title" className="text-warm-yellow">
             Title
@@ -56,6 +86,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
             className="p-2 rounded-md focus:outline-none bg-text-field-bg"
           />
         </div>
+        {state?.errors?.title && (
+          <p className="text-red-500 text-xs">{state.errors.title}</p>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-4 md:gap-y-6">
           <div className="w-full flex flex-col gap-y-2">
             <label htmlFor="type" className="text-warm-yellow">
@@ -75,6 +108,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
               ))}
             </select>
           </div>
+          {state?.errors?.type && (
+            <p className="text-red-500 text-xs">{state.errors.type}</p>
+          )}
           <div className="w-full flex flex-col gap-y-2">
             <label htmlFor="urgency" className="text-warm-yellow">
               Urgency
@@ -93,6 +129,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
               ))}
             </select>
           </div>
+          {state?.errors?.urgency && (
+            <p className="text-red-500 text-xs">{state.errors.urgency}</p>
+          )}
           <div className="w-full flex flex-col gap-y-2">
             <label htmlFor="importance" className="text-warm-yellow">
               Importance
@@ -111,6 +150,9 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
               ))}
             </select>
           </div>
+          {state?.errors?.importance && (
+            <p className="text-red-500 text-xs">{state.errors.importance}</p>
+          )}
           <div className="w-full flex flex-col gap-y-2">
             <label htmlFor="dueDate" className="text-warm-yellow">
               Deadline (optional)
@@ -121,6 +163,7 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
               defaultValue={initialData ? initialData.dueDate : undefined}
               className="p-2 rounded-md focus:outline-none bg-text-field-bg"
             >
+              <option>Select Deadline</option>
               {remainingHours.map((hour) => (
                 <option key={hour.id} value={hour.value}>
                   {hour.value}
@@ -128,13 +171,28 @@ const TaskForm = ({ initialData }: TaskFormProps) => {
               ))}
             </select>
           </div>
+          {state?.errors?.dueDate && (
+            <p className="text-red-500 text-xs">{state.errors.dueDate}</p>
+          )}
         </div>
-        <button
-          type="submit"
-          className="border-1 bg-warm-yellow py-2 px-4 rounded-md"
-        >
-          {initialData ? "Update" : "Create"}
-        </button>
+        {initialData ? (
+          <button
+            type="submit"
+            className="border-1 bg-warm-yellow py-2 px-4 rounded-md"
+          >
+            {pending ? "Updating..." : "Update"}
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="border-1 bg-warm-yellow py-2 px-4 rounded-md"
+          >
+            {pending ? "Creating..." : "Create"}
+          </button>
+        )}
+        {state?.serverErrors && (
+          <p className="text-red-500 text-sm">{state.serverErrors}</p>
+        )}
       </form>
     </Card>
   );
