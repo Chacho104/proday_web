@@ -12,26 +12,27 @@ import TaskItem from "./task-item";
 interface TaskListProps {
   tasks: Task[];
   userId: string;
+  token: any;
 }
-const TaskList = ({ tasks, userId }: TaskListProps) => {
+const TaskList = ({ tasks, userId, token }: TaskListProps) => {
   const router = useRouter();
   return (
     <Card>
       <div className="flex w-full items-center justify-between">
-        <h2 className="text-white text-lg py-2">Today&#39;s Tasks</h2>
+        <h2 className="text-white text-lg py-2 font-mono">Today&#39;s Tasks</h2>
         <CreateTaskButton
           label="Task"
           onClick={() => router.push(`/${userId}/tasks/new`)}
         />
       </div>
       <div className="pb-4 pt-2 sm:pt-0">
-        <p className="text-sm text-warm-yellow">
+        <p className="text-sm text-warm-yellow font-mono">
           Complete your to-do list for the day!
         </p>
       </div>
       <ul className="space-y-4">
         {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} userId={userId} />
+          <TaskItem key={task.id} task={task} userId={userId} token={token} />
         ))}
       </ul>
     </Card>

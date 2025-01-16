@@ -11,14 +11,26 @@ interface TasksSummaryProps {
 
 const TasksSummary = ({ icon: Icon, label, count }: TasksSummaryProps) => {
   return (
-    <Card className="flex items-start justify-start gap-x-4 w-full">
+    <Card className="flex items-start justify-start gap-x-4 w-full font-mono">
       <Icon
         size={30}
-        className="text-warm-yellow border h-10 sm:h-14 w-10 sm:w-14 p-2 border-border-color rounded-md"
+        className={`border h-10 sm:h-14 w-10 sm:w-14 p-2 border-border-color rounded-md ${
+          label === "Completed" ? "text-completed-task" : "text-warm-yellow"
+        }`}
       />
-      <div className="text-sm">
-        <h3 className="text-white">{`${count} Tasks`}</h3>
-        <p className="text-text-gray">{label}</p>
+      <div>
+        <h3 className="text-white">
+          {count === 1 ? `${count} Task` : `${count} Tasks`}
+        </h3>
+        <p
+          className={
+            label === "Completed"
+              ? "text-completed-task text-sm"
+              : "text-warm-yellow text-sm"
+          }
+        >
+          {label}
+        </p>
       </div>
     </Card>
   );
