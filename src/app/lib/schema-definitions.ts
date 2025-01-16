@@ -41,7 +41,8 @@ export const TaskFormSchema = z.object({
     .trim(),
   dueDate: z
     .string({ message: "Please enter a valid task deadline value" })
-    .trim(),
+    .trim()
+    .optional(),
 });
 
 // Type for the form state: useful for form submission action
@@ -53,6 +54,22 @@ export type TaskFormState =
         urgency?: string[];
         importance?: string[];
         dueDate?: string[];
+      };
+      serverErrors?: string;
+      message?: string;
+    }
+  | undefined;
+
+// Schema for validating user inputs when creating a sub-task or sub-task item
+export const SubTaskFormSchema = z.object({
+  title: z.string({ message: "Please enter a valid title." }).trim(),
+});
+
+// Type for the form state: useful for form submission action
+export type SubTaskFormState =
+  | {
+      errors?: {
+        title?: string[];
       };
       serverErrors?: string;
       message?: string;
