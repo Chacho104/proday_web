@@ -2,31 +2,26 @@
 
 "use client";
 
-import { SubTask, TaskItem as TaskItemType } from "@/app/lib/type-definitions";
+import { SubTask } from "@/app/lib/type-definitions";
 import SubTaskItem from "./sub-task-item";
-import TaskItemList from "../task-items/task-item-list";
 
 interface SubTaskListProps {
-  taskId: string;
+  token: any;
   subTasks: SubTask[];
   userId: string;
-  taskItems: TaskItemType[];
 }
 
-const SubTaskList = ({
-  taskId,
-  subTasks,
-  taskItems,
-  userId,
-}: SubTaskListProps) => {
+const SubTaskList = ({ token, subTasks, userId }: SubTaskListProps) => {
   return (
     <ul className="mt-3 ml-4 space-y-3">
       {subTasks.map((subTask) => (
-        <SubTaskItem key={subTask.id} subTask={subTask} userId={userId} />
+        <SubTaskItem
+          key={subTask.id}
+          subTask={subTask}
+          userId={userId}
+          token={token}
+        />
       ))}
-      {taskItems.length > 0 && (
-        <TaskItemList taskItems={taskItems} userId={userId} taskId={taskId} />
-      )}
     </ul>
   );
 };
