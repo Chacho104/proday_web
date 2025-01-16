@@ -14,7 +14,7 @@ export function listRemainingHours() {
   const hours = [];
 
   // Iterate through the remaining hours of the day
-  for (let hour = currentHour; hour < 24; hour++) {
+  for (let hour = currentHour + 1; hour < 24; hour++) {
     const ampm = hour < 12 ? "AM" : "PM";
     const formattedHour = hour % 12 === 0 ? 12 : hour % 12; // Convert to 12-hour format
     hours.push({
