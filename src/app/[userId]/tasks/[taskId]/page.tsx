@@ -1,12 +1,15 @@
-import { getTaskDetails } from "@/app/lib/dal";
+import { getTaskDetails, verifyUserSession } from "@/app/lib/dal";
 import TaskForm from "./components/task-form";
 
 const SingleTaskPage = async ({
   params,
 }: {
-  params: Promise<{ taskId: string }>;
+  params: Promise<{ userId: string; taskId: string }>;
 }) => {
-  const { taskId } = await params;
+  // Get authToken from user session to be used to send create/update requests to API
+  const authToken = await verifyUserSession();
+
+  const { userId, taskId } = await params;
 
   let initialData;
 
@@ -15,7 +18,9 @@ const SingleTaskPage = async ({
     initialData = await getTaskDetails(taskId);
   }
 
-  return <TaskForm initialData={initialData} />;
+  return (
+    <TaskForm userId={userId} initialData={initialData} token={authToken} />
+  );
 };
 
 export default SingleTaskPage;
