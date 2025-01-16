@@ -5,12 +5,11 @@ export interface Task {
   urgency: string;
   importance: string;
   type: string;
-  dueDate: string;
+  dueDate?: string;
   completed: boolean;
   createdAt: string;
   updatedAt: string;
   subTasks: SubTask[];
-  taskItems: TaskItem[];
 }
 
 export interface SubTask {
@@ -20,14 +19,12 @@ export interface SubTask {
   completed: boolean;
   createdAt: string;
   updatedAt: string;
-  taskItems: TaskItem[];
+  subTaskItems: SubTaskItem[];
 }
 
-export interface TaskItem {
+export interface SubTaskItem {
   id: string;
-  taskId?: string;
-  subTaskId?: string;
-  parentType: "TASK" | "SUB_TASK";
+  subTaskId: string;
   title: string;
   completed: boolean;
   createdAt: string;
