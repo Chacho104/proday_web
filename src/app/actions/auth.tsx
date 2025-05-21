@@ -46,12 +46,12 @@ export async function signup(state: AuthFormState, formData: FormData) {
       return { authError: `${errorMessage.message}` };
     }
 
-    // Parse and handle success response: from the signup endpoint, we get a userId and a server generated token
-    const { userId, token } = await response.json();
+    // Parse and handle success response: from the signup endpoint, we get a server generated token
+    const { token } = await response.json();
 
     // Create a user session that utilizes the token sent back from the server
     await createUserSession(token);
-    redirectPath = `/${userId}/tasks`;
+    redirectPath = `/tasks`;
   } catch (error: any) {
     // Handle errors
     console.error("Error:", error);
@@ -99,11 +99,11 @@ export async function login(state: AuthFormState, formData: FormData) {
     }
 
     // Parse and handle success response
-    const { userId, token } = await response.json();
+    const { token } = await response.json();
 
     await createUserSession(token);
 
-    redirectPath = `/${userId}/tasks`;
+    redirectPath = `/tasks`;
   } catch (error: any) {
     // Handle errors
     console.error("Error:", error);
