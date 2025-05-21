@@ -1,4 +1,4 @@
-// File for defining the logic for creating and updating sub-task items
+// File for defining the logic for creating, updating, and deleting sub-task items
 // These are server actions: ensures that the actions are not only executed server side,
 // but also that the functions are callable from client components like forms
 
@@ -7,14 +7,13 @@
 import { redirect } from "next/navigation";
 
 import { SubTaskFormSchema, SubTaskFormState } from "../lib/schema-definitions";
+import { verifyUserSession } from "../lib/session";
 
 // Server action for creating or updating a task depending on the httpMethod value passed in
 export async function subTaskItemFormAction(
   httpMethod: string,
   subTaskId: string,
   subTaskItemId: string | null,
-  userId: string,
-  token: string,
   state: SubTaskFormState,
   formData: FormData
 ) {
@@ -35,6 +34,10 @@ export async function subTaskItemFormAction(
 
   let redirectPath: string | null = null;
 
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
   if (httpMethod === "POST") {
     const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${subTaskId}/items`;
     try {
@@ -43,7 +46,7 @@ export async function subTaskItemFormAction(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           title,
@@ -57,7 +60,7 @@ export async function subTaskItemFormAction(
       }
 
       // If response is okay, redirect user to all tasks page
-      redirectPath = `/${userId}/tasks`;
+      redirectPath = `/tasks`;
     } catch (error: any) {
       // Handle errors
       console.error("Error:", error);
@@ -74,7 +77,7 @@ export async function subTaskItemFormAction(
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           title,
@@ -88,7 +91,7 @@ export async function subTaskItemFormAction(
       }
 
       // If response is okay, redirect user to all tasks page
-      redirectPath = `/${userId}/tasks`;
+      redirectPath = `/tasks`;
     } catch (error: any) {
       // Handle errors
       console.error("Error:", error);
@@ -100,7 +103,6 @@ export async function subTaskItemFormAction(
 
 // Server Action for completing or uncompleting a task item
 export async function toggleSubTaskItemCompletion(
-  token: string,
   subTaskId: string,
   itemId: string,
   title: string,
@@ -108,13 +110,17 @@ export async function toggleSubTaskItemCompletion(
 ) {
   const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${subTaskId}/items/${itemId}`;
 
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
   try {
     // Send PATCH request
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         title,
@@ -124,12 +130,44 @@ export async function toggleSubTaskItemCompletion(
 
     // Return from function if response is not okay and show error message to client
     if (!response.ok) {
-      const errorMessage = await response.json();
-      console.log(errorMessage);
-      return null;
+      const { message } = await response.json();
+      return message;
     }
 
-    // If response is ok, return success message
+    // If response is ok, extract and return success message
+    const { message } = await response.json();
+    return message;
+  } catch (error: any) {
+    // Handle errors
+    console.error("Error:", error);
+  }
+}
+
+// Server Action for deleting a task item
+export async function deleteSubTaskItem(subTaskId: string, itemId: string) {
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${subTaskId}/items/${itemId}`;
+
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
+  try {
+    // Send DELETE request
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    // Return from function if response is not okay and show error message to client
+    if (!response.ok) {
+      const { message } = await response.json();
+      return message;
+    }
+
+    // If response is ok, extract and return success message
     const { message } = await response.json();
 
     return message;

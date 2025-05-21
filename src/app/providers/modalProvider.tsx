@@ -3,7 +3,9 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ModalData {
-  taskId: string;
+  taskId?: string;
+  subTaskId?: string;
+  subTaskItemId?: string;
 }
 
 // Context value type

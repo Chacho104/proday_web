@@ -1,4 +1,4 @@
-// File for defining the logic for creating and updating tasks
+// File for defining the logic for creating, updating, and deleting tasks
 // These are server actions: ensures that the actions are not only executed server side,
 // but also that the functions are callable from client components like forms
 
@@ -7,13 +7,12 @@
 import { redirect } from "next/navigation";
 
 import { TaskFormState, TaskFormSchema } from "../lib/schema-definitions";
+import { verifyUserSession } from "../lib/session";
 
 // Server action for creating or updating a task depending on the httpMethod value passed in
 export async function taskFormAction(
   httpMethod: string,
   taskId: string | null,
-  userId: any,
-  token: any,
   state: TaskFormState,
   formData: FormData
 ) {
@@ -46,6 +45,10 @@ export async function taskFormAction(
 
   let redirectPath: string | null = null;
 
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
   if (httpMethod === "POST") {
     const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks`;
     try {
@@ -54,7 +57,7 @@ export async function taskFormAction(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           title,
@@ -72,7 +75,7 @@ export async function taskFormAction(
       }
 
       // If response is okay, redirect user to all tasks page
-      redirectPath = `/${userId}/tasks`;
+      redirectPath = `/tasks`;
     } catch (error: any) {
       // Handle errors
       console.error("Error:", error);
@@ -89,7 +92,7 @@ export async function taskFormAction(
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           title,
@@ -107,7 +110,7 @@ export async function taskFormAction(
       }
 
       // If response is okay, redirect user to all tasks page
-      redirectPath = `/${userId}/tasks`;
+      redirectPath = `/tasks`;
     } catch (error: any) {
       // Handle errors
       console.error("Error:", error);
@@ -117,10 +120,9 @@ export async function taskFormAction(
   }
 }
 
-// Server Action for completing or uncompleting a task
+// Server Action for completing or uncompleting a task - updating task completion
 
 export async function toggleTaskCompletion(
-  token: string,
   taskId: string,
   title: string,
   type: string,
@@ -130,13 +132,17 @@ export async function toggleTaskCompletion(
 ) {
   const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}`;
 
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
   try {
     // Send PATCH request
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         title,
@@ -149,14 +155,45 @@ export async function toggleTaskCompletion(
 
     // Return from function if response is not okay and show error message to client
     if (!response.ok) {
-      const errorMessage = await response.json();
-      console.log(errorMessage);
-      return null;
+      const { message } = await response.json();
+      return message;
     }
 
     // If response is ok, return success message
     const { message } = await response.json();
+    return message;
+  } catch (error: any) {
+    // Handle errors
+    console.error("Error:", error);
+  }
+}
 
+// Server action for deleting a task
+export async function deleteTask(taskId: string) {
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}`;
+
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  const authToken = await verifyUserSession();
+
+  try {
+    // Send DELETE request
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    // Return from function if response is not okay and show error message to client
+    if (!response.ok) {
+      const { message } = await response.json();
+      return message;
+    }
+
+    // If response is ok, await success message and return it to client
+    const { message } = await response.json();
     return message;
   } catch (error: any) {
     // Handle errors

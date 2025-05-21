@@ -68,7 +68,7 @@ const Login = () => {
           <p className="text-red-500 text-sm">{state.authError}</p>
         )}
         <div className="flex items-center gap-x-1 text-sm text-white">
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <Link
             href={"/signup"}
             className="hover:text-warm-yellow hover:underline hover:underline-offset-2 transition"

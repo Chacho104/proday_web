@@ -6,6 +6,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Function to get current date and format it in day date month, year format
+export function getCurrentDate() {
+  const now = new Date(); // Get the current date and time
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short", // Full name of the day
+    year: "numeric", // Numeric year
+    month: "long", // Full name of the month
+    day: "numeric", // Numeric day
+  };
+  return now.toLocaleDateString("en-GB", options); // Format the date in English (GB) locale
+}
+
 // Function to list the remaining hours of the day in a.m/p.m time format
 
 export function listRemainingHours() {
