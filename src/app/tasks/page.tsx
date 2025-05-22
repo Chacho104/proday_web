@@ -3,14 +3,14 @@
 import { TbClipboardSmile, TbClipboardText } from "react-icons/tb";
 
 import { TaskData } from "@/app/lib/type-definitions";
-import { getUserTasks } from "@/app/lib/dal";
 
 import NoTasksUI from "./components/tasks/no-tasks-ui";
 import TaskList from "./components/tasks/task-list";
 import TasksSummary from "./components/tasks/tasks-summary";
+import { getAllTasks } from "../actions/tasks";
 
 const UserTasksPage = async () => {
-  const tasks: TaskData = await getUserTasks();
+  const tasks: TaskData = await getAllTasks();
   const pendingTasks = tasks.total - tasks.completed;
 
   return (
