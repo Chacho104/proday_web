@@ -113,9 +113,7 @@ export async function login(state: AuthFormState, formData: FormData) {
   }
 }
 
-// Server action for logging out
-// Called when user clicks Log Out
+// Server action for logging out - called when user clicks Log Out
 export async function logout() {
-  deleteUserSession();
-  redirect("/login");
+  await deleteUserSession();
 }
