@@ -1,8 +1,10 @@
-// File for defining the logic for creating, updating, and deleting sub-tasks
+// File for defining the CRUD logic for sub-tasks
 // These are server actions: ensures that the actions are not only executed server side,
 // but also that the functions are callable from client components like forms
 
 "use server";
+
+import { cache } from "react";
 
 import { redirect } from "next/navigation";
 
@@ -142,6 +144,37 @@ export async function toggleSubTaskCompletion(
     console.error("Error:", error);
   }
 }
+
+// Get sub-task details for a specific sub-task
+export const getSubTaskDetails = cache(
+  async (taskId: string, subTaskId: string) => {
+    const authToken = await verifyUserSession();
+
+    const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}/sub-tasks/${subTaskId}`;
+
+    try {
+      // Send GET request to get tasks
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const { message } = await response.json();
+        return message;
+      }
+
+      const subTask = await response.json();
+      return subTask.data;
+    } catch (error: any) {
+      console.error("Error:", error);
+      return null;
+    }
+  }
+);
 
 // Server Action for deleting a sub-task
 export async function deleteSubTask(taskId: string, subTaskId: string) {
