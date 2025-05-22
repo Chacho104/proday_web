@@ -30,6 +30,7 @@ const Login = () => {
             id="email"
             placeholder="Email"
             className="p-2 rounded-md focus:outline-none bg-text-field-bg"
+            autoComplete="email"
           />
         </div>
         {state?.errors?.email && (
