@@ -1,4 +1,5 @@
 // Logic for creating and managing user sessions
+// Must be done on the server only - hence the use of server-only flag
 
 import "server-only";
 
@@ -70,6 +71,8 @@ export const verifyUserSession = cache(async () => {
     return sessionData?.authToken;
   } else {
     console.log("No user session found!");
+    // Redirect to login page - redirect also terminates the execution of the program, so no need to return
+    // In fact, code after redirect is not reachable
     redirect("/login");
   }
 });
@@ -80,4 +83,5 @@ export const verifyUserSession = cache(async () => {
 export async function deleteUserSession() {
   const cookieStore = await cookies();
   cookieStore.delete("userSession");
+  redirect("/login");
 }
