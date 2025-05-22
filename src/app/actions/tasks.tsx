@@ -1,8 +1,10 @@
-// File for defining the logic for creating, updating, and deleting tasks
+// File for defining the CRUD logic for tasks
 // These are server actions: ensures that the actions are not only executed server side,
 // but also that the functions are callable from client components like forms
 
 "use server";
+
+import { cache } from "react";
 
 import { redirect } from "next/navigation";
 
@@ -47,6 +49,8 @@ export async function taskFormAction(
 
   // Get auth token from session
   // This is a server action, so we can use the session directly
+  // If no authToken exists, the verifyUserSession redirects to login page
+  // Action uses redirect which in essence terminates the execution of the program
   const authToken = await verifyUserSession();
 
   if (httpMethod === "POST") {
@@ -134,6 +138,8 @@ export async function toggleTaskCompletion(
 
   // Get auth token from session
   // This is a server action, so we can use the session directly
+  // If no authToken exists, the verifyUserSession redirects to login page
+  // Action uses redirect which in essence terminates the execution of the program
   const authToken = await verifyUserSession();
 
   try {
@@ -167,6 +173,69 @@ export async function toggleTaskCompletion(
     console.error("Error:", error);
   }
 }
+
+// Get all tasks for the currently logged in user
+// Probably a good idea to cache the action as it's frequently called
+export const getAllTasks = cache(async () => {
+  // Get auth token from session
+  // This is a server action, so we can use the session directly
+  // If no authToken exists, the verifyUserSession redirects to login page
+  // Action uses redirect which in essence terminates the execution of the program
+  const authToken = await verifyUserSession();
+
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks`;
+
+  try {
+    // Send GET request to get tasks
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const { message } = await response.json();
+      return message;
+    }
+
+    const tasks = await response.json();
+    return tasks;
+  } catch (error: any) {
+    console.error("Error:", error);
+    return null;
+  }
+});
+
+// Get task details for a specific task
+export const getTaskDetails = cache(async (taskId: string) => {
+  const authToken = await verifyUserSession();
+
+  const url = `${process.env.NEXT_PUBLIC_PRODAY_API_URL}/tasks/${taskId}`;
+
+  try {
+    // Send GET request to get tasks
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const { message } = await response.json();
+      return message;
+    }
+
+    const task = await response.json();
+    return task.data;
+  } catch (error: any) {
+    console.error("Error:", error);
+    return null;
+  }
+});
 
 // Server action for deleting a task
 export async function deleteTask(taskId: string) {
