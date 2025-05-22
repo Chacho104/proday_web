@@ -9,6 +9,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import MenuItem from "@/app/components/ui-elements/general/menu-item";
+import { logout } from "@/app/actions/auth";
 
 const UserAvatar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -16,6 +17,11 @@ const UserAvatar = () => {
   const toggleUserMenuItems = () => {
     setIsOpen((value) => !value);
   };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <>
       <button
@@ -52,7 +58,7 @@ const UserAvatar = () => {
             />
             {/* Callback function to logout user */}
             <MenuItem
-              onClick={() => {}}
+              onClick={handleLogout}
               label="Log Out"
               icon={MdOutlineLogout}
             />
