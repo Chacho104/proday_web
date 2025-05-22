@@ -1,4 +1,4 @@
-import { getTaskDetails } from "@/app/lib/dal";
+import { getTaskDetails } from "@/app/actions/tasks";
 import TaskForm from "./components/task-form";
 
 const SingleTaskPage = async ({

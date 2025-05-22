@@ -1,6 +1,6 @@
 // Single item page for an item under a sub-task
 
-import { getTaskItemDetails } from "@/app/lib/dal";
+import { getTaskItemDetails } from "@/app/actions/sub-task-items";
 import SubTaskItemForm from "./components/sub-task-item-form";
 
 const SingleSubTaskItemPage = async ({

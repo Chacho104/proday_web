@@ -3,7 +3,7 @@
 // Use task id to either get initial data (a subTask whose parent id is same as task id) or
 // Create a new subTask with the task id as parent id
 
-import { getSubTaskDetails } from "@/app/lib/dal";
+import { getSubTaskDetails } from "@/app/actions/sub-tasks";
 import SubTaskForm from "./components/sub-task-form";
 
 const SingleSubTaskPage = async ({
